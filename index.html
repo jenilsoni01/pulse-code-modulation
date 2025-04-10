@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCM</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body data-theme="light">
+    <div class="container">
+        <header class="app-header">
+             <h1>Real-Time Pulse Code Modulation Visualizer</h1>
+             <div class="theme-switcher">
+                 <span id="theme-icon">☀️</span> <!-- Icon changes with theme -->
+                 <input type="checkbox" id="themeToggle" aria-label="Toggle dark mode">
+                 <label for="themeToggle" class="toggle-label"></label>
+             </div>
+        </header>
+
+        <form id="pcm-form" class="controls-grid">
+            <fieldset class="control-group">
+                <legend>Signal Parameters</legend>
+                <div class="input-group">
+                    <label for="frequency">Frequency (Hz):</label>
+                    <input type="number" id="frequency" value="1" min="0.1" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label for="amplitude">Amplitude:</label>
+                    <input type="number" id="amplitude" value="4" min="0.1" step="0.1" required>
+                </div>
+                 <!-- Replaced Wave Type with Phase -->
+                <div class="input-group">
+                    <label for="phase">Phase (deg):</label>
+                    <input type="number" id="phase" value="0" step="1" required>
+                     <!-- Allow any degree, wrap in calculation -->
+                </div>
+            </fieldset>
+
+            <fieldset class="control-group">
+                <legend>PCM Parameters</legend>
+                <div class="input-group">
+                    <label for="samplingRate">Sampling Rate (Hz):</label>
+                    <input type="number" id="samplingRate" value="20" min="1" step="1" required>
+                </div>
+                <div class="input-group">
+                    <label for="quantizationLevels">Quantization Levels:</label>
+                    <input type="number" id="quantizationLevels" value="8" min="2" step="1" required>
+                </div>
+            </fieldset>
+
+             <fieldset class="control-group">
+                <legend>Time Range</legend>
+                 <div class="input-group">
+                    <label for="startTime">Start Time (s):</label>
+                    <input type="number" id="startTime" value="0" min="0" step="0.1" required>
+                </div>
+                <div class="input-group">
+                    <label for="endTime">End Time (s):</label>
+                    <input type="number" id="endTime" value="2" min="0" step="0.1" required>
+                     <!-- Default to 2 seconds -->
+                </div>
+            </fieldset>
+
+            <!-- Removed explicit button, update happens on input -->
+             <div id="error-message" class="error full-width-error"></div>
+
+        </form>
+
+        <section class="results-section">
+             <h2>Results</h2>
+             <div class="metrics">
+                 <div id="snr-display">SNR: -- dB</div>
+             </div>
+
+            <div class="visualization-grid">
+                <!-- Charts -->
+                <div class="chart-container">
+                    <canvas id="analogSampledChart"></canvas>
+                     <!-- Titles will be set in JS options -->
+                </div>
+                <div class="chart-container">
+                    <canvas id="quantizedChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="reconstructedChart"></canvas>
+                </div>
+                <div class="chart-container">
+                    <canvas id="errorChart"></canvas>
+                </div>
+
+                <!-- PCM Data Table -->
+                <div class="output-container table-container">
+                    <h3>PCM Data Table</h3>
+                    <div class="table-wrapper">
+                         <table id="pcm-data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Time</th>
+                                    <th>Sampled</th>
+                                    <th>Quantized</th>
+                                    <th>Error</th>
+                                    <th>Code</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- PCM Encoded Output Sequence -->
+                <div class="output-container code-output-container">
+                    <h3>PCM Encoded Output (Sequence)</h3>
+                    <pre id="pcm-output"></pre>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

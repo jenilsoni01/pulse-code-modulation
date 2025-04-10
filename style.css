@@ -1,0 +1,392 @@
+/* --- Theme Variables --- */
+:root {
+    --bg-color: #f0f2f5; /* Lighter grey background */
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --text-muted: #666;
+    --input-bg: #ffffff;
+    --input-border: #d9d9d9;
+    --input-focus-border: #5b9dd9; /* Blue focus */
+    --chart-bg: #ffffff;
+    --chart-border: #e8e8e8;
+    --table-header-bg: #f5f7fa;
+    --table-border: #e8e8e8;
+    --output-bg: #f9f9f9;
+    --output-pre-bg: #f0f0f0;
+    --output-pre-border: #ddd;
+    --button-bg: #4CAF50; /* Green button */
+    --button-text: #ffffff;
+    --error-color: #e53935; /* Material Design Red */
+    --warning-color: #f59e0b; /* Amber */
+    --link-color: #007bff;
+    --grid-color: rgba(0, 0, 0, 0.08);
+    --tooltip-bg: rgba(0, 0, 0, 0.75);
+    --tooltip-text: #ffffff;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --border-radius: 6px;
+}
+
+body[data-theme="dark"] {
+    --bg-color: #1a1d24;
+    --container-bg: #242933;
+    --text-color: #e0e0e0;
+    --text-muted: #a0a0a0;
+    --input-bg: #2c3340;
+    --input-border: #4a5568;
+    --input-focus-border: #63b3ed; /* Lighter blue focus */
+    --chart-bg: #2c3340;
+    --chart-border: #4a5568;
+    --table-header-bg: #323a4a;
+    --table-border: #4a5568;
+    --output-bg: #282e3b;
+    --output-pre-bg: #1f232c;
+    --output-pre-border: #4a5568;
+    --button-bg: #48bb78; /* Dark mode green */
+    --error-color: #fca5a5; /* Lighter red */
+    --warning-color: #fcd34d; /* Lighter amber */
+    --link-color: #60abff;
+    --grid-color: rgba(255, 255, 255, 0.1);
+    --tooltip-bg: rgba(230, 230, 230, 0.85);
+    --tooltip-text: #1a1d24;
+     /* Shadows are less prominent in dark mode */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+/* --- General Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 15px; /* Base font size */
+}
+
+.container {
+    max-width: 1300px; /* Wider for more horizontal space */
+    margin: 20px auto;
+    background: var(--container-bg);
+    padding: 25px 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    transition: background-color 0.3s ease;
+}
+
+/* --- Header --- */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--input-border);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* --- Theme Switcher --- */
+.theme-switcher {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-muted);
+}
+#theme-icon {
+    font-size: 1.4em;
+    transition: transform 0.3s ease;
+}
+body[data-theme="dark"] #theme-icon {
+    transform: rotate(180deg);
+}
+
+#themeToggle {
+    display: none; /* Hide checkbox */
+}
+.toggle-label {
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background-color: var(--input-border);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.toggle-label::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+#themeToggle:checked + .toggle-label {
+    background-color: var(--button-bg); /* Use button color when active */
+}
+#themeToggle:checked + .toggle-label::after {
+    transform: translateX(24px);
+}
+
+/* --- Controls Grid / Form --- */
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Adjust minmax */
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.control-group {
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius);
+    padding: 15px 20px 20px 20px;
+    margin: 0; /* Remove default fieldset margin */
+    background-color: var(--container-bg); /* Slight lift */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.control-group legend {
+    padding: 0 8px;
+    font-weight: 500;
+    color: var(--text-muted);
+    font-size: 0.9em;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px; /* Space between inputs in a group */
+}
+
+.input-group:first-of-type {
+    margin-top: 5px; /* Less space after legend */
+}
+
+.input-group label {
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+input[type="number"], select {
+    padding: 9px 12px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+input[type="number"]:focus, select:focus {
+    outline: none;
+    border-color: var(--input-focus-border);
+    box-shadow: 0 0 0 2px rgba(var(--input-focus-border), 0.2);
+}
+
+.error {
+    color: var(--error-color);
+    font-weight: 500;
+    margin-top: 5px;
+    font-size: 0.9em;
+    min-height: 1.5em; /* Reserve space */
+    text-align: center;
+}
+.full-width-error {
+     /* Span across grid columns if form has columns */
+    grid-column: 1 / -1;
+    margin-top: -10px; /* Pull up slightly */
+    margin-bottom: 15px;
+}
+
+/* --- Results Section --- */
+.results-section {
+    margin-top: 35px;
+    border-top: 1px solid var(--input-border);
+    padding-top: 25px;
+}
+
+.results-section > h2 { /* Direct child h2 */
+     font-size: 1.4em;
+     margin-bottom: 20px;
+     color: var(--text-color);
+     font-weight: 600;
+}
+
+.metrics {
+    margin-bottom: 25px;
+    font-size: 1.1em;
+    background-color: var(--output-bg);
+    padding: 12px 18px;
+    border-radius: var(--border-radius);
+    color: var(--text-muted);
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.3s ease;
+}
+.metrics #snr-display {
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+
+/* --- Visualization Grid --- */
+.visualization-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+/* --- Chart Container --- */
+.chart-container {
+    background: var(--chart-bg);
+    padding: 15px;
+    border: 1px solid var(--chart-border);
+    border-radius: var(--border-radius);
+    position: relative;
+    height: 350px;
+    box-shadow: var(--shadow-sm);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+}
+
+canvas {
+    max-width: 100%;
+    display: block;
+}
+
+/* --- Output & Table Containers --- */
+.output-container {
+    background: var(--output-bg);
+    border: 1px solid var(--table-border);
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    /* Span full width */
+    grid-column: 1 / -1;
+    padding: 15px 20px;
+    margin-top: 10px; /* Add some space above full-width elements */
+}
+
+.output-container h3 {
+     font-size: 1.15em;
+     margin-top: 0;
+     margin-bottom: 15px;
+     color: var(--text-color);
+     font-weight: 600;
+}
+
+.code-output-container #pcm-output {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.9em;
+    background-color: var(--output-pre-bg);
+    color: var(--text-color);
+    padding: 12px 15px;
+    border: 1px dashed var(--output-pre-border);
+    border-radius: var(--border-radius);
+    max-height: 150px;
+    overflow-y: auto;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* --- Table Specific Styles --- */
+.table-container {
+    padding: 0; /* Remove padding if wrapper has it */
+}
+.table-container h3 {
+    padding: 15px 20px 0 20px; /* Add padding back to title */
+}
+
+.table-wrapper {
+    max-height: 350px; /* Slightly taller table */
+    overflow: auto; /* Auto scrollbars */
+    margin: 15px 20px 20px 20px;
+    border: 1px solid var(--table-border);
+    border-radius: var(--border-radius);
+}
+
+#pcm-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+#pcm-data-table th,
+#pcm-data-table td {
+    border-bottom: 1px solid var(--table-border); /* Only bottom border */
+    padding: 10px 12px; /* Adjusted padding */
+    text-align: left;
+    white-space: nowrap; /* Prevent wrapping in cells */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+#pcm-data-table th {
+    background-color: var(--table-header-bg);
+    font-weight: 600; /* Bolder header */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom-width: 2px; /* Thicker bottom border for header */
+}
+/* Target first/last cell for rounded corners if table wrapper has radius */
+#pcm-data-table th:first-child { border-top-left-radius: calc(var(--border-radius) - 1px); }
+#pcm-data-table th:last-child { border-top-right-radius: calc(var(--border-radius) - 1px); }
+
+
+#pcm-data-table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+body[data-theme="dark"] #pcm-data-table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+#pcm-data-table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+body[data-theme="dark"] #pcm-data-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+#pcm-data-table td:nth-child(6) { /* Target PCM code cell */
+     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 900px) {
+    .visualization-grid {
+        grid-template-columns: 1fr; /* Stack charts */
+    }
+    .chart-container {
+        height: 300px; /* Adjust height for stacked view */
+    }
+}
+
+@media (max-width: 600px) {
+    body { padding: 10px; }
+    .container { padding: 15px; margin: 10px auto;}
+    .app-header { flex-direction: column; align-items: flex-start;}
+    .controls-grid { grid-template-columns: 1fr; gap: 20px; }
+    .control-group { padding: 15px; }
+    .app-header h1 { font-size: 1.4em; }
+    .results-section > h2 { font-size: 1.3em; }
+    .output-container h3 { font-size: 1.1em; }
+    .chart-container { height: 280px; }
+    #pcm-data-table { font-size: 0.85em; }
+    #pcm-data-table th, #pcm-data-table td { padding: 8px 10px; }
+
+}
