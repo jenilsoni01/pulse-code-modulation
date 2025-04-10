@@ -18,7 +18,7 @@ A web-based tool to visualize the Pulse Code Modulation (PCM) process in real-ti
 
 ## Demo
 
-Try it live: [Link](https://pulse-code-modeluation.netlify.app) <!-- Replace with actual link if hosted -->
+Try it live: [Link](https://pulse-code-modulation.netlify.app) <!-- Replace with actual link if hosted -->
 
 ## Installation
 
